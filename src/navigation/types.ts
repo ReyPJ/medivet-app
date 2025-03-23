@@ -6,4 +6,7 @@ export type RootStackParamList = {
   NewPatient: undefined;
   NewMedication: { patientId: number };
   MedicationDetails: { patientId: number; medicationId: number };
+  AdminUsers: undefined;
+  CreateUser: undefined;
+  EditUser: { userId: number };
 };

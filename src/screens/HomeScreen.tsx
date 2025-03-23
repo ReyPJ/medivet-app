@@ -14,6 +14,7 @@ import {
   List,
   Card,
   Divider,
+  Button,
 } from "react-native-paper";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFocusEffect } from "@react-navigation/native";
@@ -135,7 +136,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
         <Text style={styles.welcomeText}>
           Hola, {user?.username || "Usuario"}
         </Text>
-        <IconButton icon="logout" size={24} onPress={handleLogout} />
+        <View style={styles.headerButtons}>
+          {/* Mostrar botón de administración solo para usuarios admin */}
+          {user?.role === "admin" && (
+            <Button
+              icon="account-cog"
+              mode="contained"
+              onPress={() => navigation.navigate("AdminUsers")}
+              style={styles.adminButton}
+            >
+              Admin
+            </Button>
+          )}
+          <IconButton icon="logout" size={24} onPress={handleLogout} />
+        </View>
       </View>
 
       {/* Barra de búsqueda */}
@@ -216,6 +230,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     elevation: 2,
     marginTop: 40,
+  },
+  headerButtons: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  adminButton: {
+    backgroundColor: "#673AB7",
+    marginRight: 8,
   },
   welcomeText: {
     fontSize: 18,

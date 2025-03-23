@@ -9,6 +9,9 @@ import PatientDetailsScreen from "./src/screens/PatientDetailsScreen";
 import NewPatientScreen from "./src/screens/NewPatientScreen";
 import NewMedicationScreen from "./src/screens/NewMedicationScreen";
 import MedicationDetailsScreen from "./src/screens/MedicationDetailsScreen";
+import AdminUsersScreen from "./src/screens/admin/AdminUsersScreen";
+import CreateUserScreen from "./src/screens/admin/CreateUserScreen";
+import EditUserScreen from "./src/screens/admin/EditUserScreen";
 import { RootStackParamList } from "./src/navigation/types";
 import { appTheme } from "./src/theme/theme";
 
@@ -60,6 +63,21 @@ export default function App() {
               options={{
                 title: "Detalles del Tratamiento",
               }}
+            />
+            <Stack.Screen
+              name="AdminUsers"
+              component={AdminUsersScreen}
+              options={{ title: "Gestión de Usuarios", headerShown: true }}
+            />
+            <Stack.Screen
+              name="CreateUser"
+              component={CreateUserScreen}
+              options={{ title: "Crear Usuario", headerShown: true }}
+            />
+            <Stack.Screen
+              name="EditUser"
+              component={EditUserScreen}
+              options={{ title: "Editar Usuario", headerShown: true }}
             />
           </Stack.Navigator>
         </NavigationContainer>

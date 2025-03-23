@@ -1,6 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import * as SecureStore from "expo-secure-store";
-import { User, Patient, Medication, Dose } from "../types";
+import {
+  User,
+  Patient,
+  Medication,
+  Dose,
+  CreateUserDto,
+  UpdateUserDto,
+} from "../types";
 import { format } from "date-fns";
 
 const API_URL = "http://10.0.2.2:8000";
@@ -159,6 +166,100 @@ export const getAssistants = async (): Promise<User[]> => {
   } catch (error) {
     console.error("Error al obtener la lista de asistentes:", error);
     throw new Error("Error al obtener la lista de asistentes");
+  }
+};
+
+export const getUsers = async (): Promise<any[]> => {
+  try {
+    const response = await apiClient.get("/users");
+    return response.data;
+  } catch (error) {
+    console.error("Error en getUsers:", error);
+    throw error;
+  }
+};
+
+// Obtener un usuario por ID
+export const getUserById = async (userId: number): Promise<any> => {
+  try {
+    const response = await apiClient.get(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error en getUserById:", error);
+    throw error;
+  }
+};
+
+// Crear un nuevo usuario
+export const createUser = async (userData: CreateUserDto): Promise<User> => {
+  try {
+    // Mapear los nombres de campos correctos
+    const userPayload = {
+      username: userData.username,
+      email: userData.email,
+      password: userData.password,
+      role: userData.role,
+      full_name: userData.full_name, // Asegurarse de usar el nombre correcto
+      phone: userData.phone, // Asegurarse de usar el nombre correcto
+    };
+
+    const response = await apiClient.post("/users/", userPayload);
+    return response.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error("Error en createUser:", err.response.status);
+      console.error("Datos del error:", err.response.data);
+    } else if (err.request) {
+      console.error("No se recibió respuesta:", err.request);
+    } else {
+      console.error("Error:", (err as Error).message);
+    }
+    throw error;
+  }
+};
+// Actualizar un usuario existente
+export const updateUser = async (
+  userId: number,
+  userData: UpdateUserDto
+): Promise<User> => {
+  try {
+    // Mapear los nombres de campos correctos
+    const userPayload: Partial<UpdateUserDto> = {
+      username: userData.username,
+      email: userData.email,
+      role: userData.role,
+      full_name: userData.full_name, // Usar el nombre correcto
+      phone: userData.phone, // Usar el nombre correcto
+    };
+
+    // Solo incluir contraseña si se proporcionó
+    if (userData.password) {
+      userPayload.password = userData.password;
+    }
+
+    console.log("Datos actualizados:", JSON.stringify(userPayload, null, 2));
+    const response = await apiClient.put(`/users/${userId}/`, userPayload);
+    return response.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error("Error en updateUser:", err.response.status);
+      console.error("Datos del error:", err.response.data);
+    } else {
+      console.error("Error en updateUser:", (err as Error).message);
+    }
+    throw error;
+  }
+};
+
+// Eliminar un usuario
+export const deleteUser = async (userId: number): Promise<void> => {
+  try {
+    await apiClient.delete(`/users/${userId}`);
+  } catch (error) {
+    console.error("Error en deleteUser:", error);
+    throw error;
   }
 };
 

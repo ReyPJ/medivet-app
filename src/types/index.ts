@@ -7,6 +7,12 @@ export interface User {
   full_name?: string;
 }
 
+export interface CreateUserDto extends Omit<User, "id"> {
+  password: string;
+}
+
+export interface UpdateUserDto extends Partial<CreateUserDto> {}
+
 export interface AuthState {
   user: User | null;
   token: string | null;

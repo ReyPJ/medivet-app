@@ -4,6 +4,7 @@ import { Button, Card } from "react-native-paper";
 import { Dose } from "../types";
 import { format } from "date-fns";
 import { useExtendedTheme } from "../theme/theme";
+import { administerDose } from "../services/api";
 
 interface DoseItemProps {
   dose: Dose;
@@ -21,6 +22,15 @@ export const DoseItem: React.FC<DoseItemProps> = ({ dose, onAdminister }) => {
     dose.status === "pending" &&
     (currentTime >= scheduledTime ||
       scheduledTime.getTime() - currentTime.getTime() < 5 * 60 * 1000);
+
+  const adminDose = async () => {
+    try {
+      await administerDose(dose.id);
+      onAdminister && onAdminister(dose);
+    } catch (error) {
+      console.error("Error al administrar dosis:", error);
+    }
+  };
 
   // Texto de estado según condiciones
   const getStatusText = () => {
@@ -94,7 +104,7 @@ export const DoseItem: React.FC<DoseItemProps> = ({ dose, onAdminister }) => {
           <Button
             mode="contained"
             icon="needle"
-            onPress={() => (onAdminister ? dose : null)}
+            onPress={adminDose}
             disabled={!canAdminister}
             style={[
               styles.button,
