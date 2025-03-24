@@ -208,11 +208,21 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
         )}
       </ScrollView>
 
-      <FAB
-        style={styles.fab}
-        icon="plus"
-        onPress={() => navigation.navigate("NewPatient")}
-      />
+      <View style={styles.fabContainer}>
+        <FAB
+          icon="robot"
+          style={[styles.fab, styles.fabSecondary]}
+          onPress={() => navigation.navigate("AIAssistant")}
+          label="Asistente IA"
+          color="#ffffff"
+        />
+        <FAB
+          icon="plus"
+          style={styles.fab}
+          onPress={() => navigation.navigate("NewPatient")}
+          label="Nuevo Paciente"
+        />
+      </View>
     </View>
   );
 };
@@ -268,12 +278,18 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     fontWeight: "bold",
   },
-  fab: {
+  fabContainer: {
     position: "absolute",
-    margin: 16,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "#00796B",
+    right: 16,
+    bottom: 16,
+    flexDirection: "column",
+    gap: 10,
+  },
+  fab: {
+    backgroundColor: "#3498db",
+  },
+  fabSecondary: {
+    backgroundColor: "#9b59b6",
   },
   emptyContainer: {
     padding: 20,

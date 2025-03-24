@@ -9,4 +9,5 @@ export type RootStackParamList = {
   AdminUsers: undefined;
   CreateUser: undefined;
   EditUser: { userId: number };
+  AIAssistant: undefined;
 };

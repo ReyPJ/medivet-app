@@ -59,15 +59,6 @@ const MedicationDetailsScreen: React.FC<MedicationDetailsScreenProps> = ({
     fetchData();
   };
 
-  const handleCancelMedication = async () => {
-    try {
-      await cancelMedication(medicationId);
-      await fetchData();
-    } catch (error) {
-      console.error("Error al cancelar medicación:", error);
-    }
-  };
-
   const formatDate = (dateString?: string): string => {
     if (!dateString) return "N/A";
     try {
@@ -179,18 +170,6 @@ const MedicationDetailsScreen: React.FC<MedicationDetailsScreenProps> = ({
             </View>
           </View>
         </Card.Content>
-
-        {medication.status === "active" && (
-          <Card.Actions>
-            <Button
-              mode="outlined"
-              onPress={handleCancelMedication}
-              style={styles.cancelButton}
-            >
-              Cancelar Tratamiento
-            </Button>
-          </Card.Actions>
-        )}
       </Card>
 
       {pendingDoses.length > 0 && (

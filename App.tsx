@@ -12,6 +12,7 @@ import MedicationDetailsScreen from "./src/screens/MedicationDetailsScreen";
 import AdminUsersScreen from "./src/screens/admin/AdminUsersScreen";
 import CreateUserScreen from "./src/screens/admin/CreateUserScreen";
 import EditUserScreen from "./src/screens/admin/EditUserScreen";
+import AIAssistantScreen from "./src/screens/AIAssistantScreen";
 import { RootStackParamList } from "./src/navigation/types";
 import { appTheme } from "./src/theme/theme";
 
@@ -78,6 +79,11 @@ export default function App() {
               name="EditUser"
               component={EditUserScreen}
               options={{ title: "Editar Usuario", headerShown: true }}
+            />
+            <Stack.Screen
+              name="AIAssistant"
+              component={AIAssistantScreen}
+              options={{ title: "Asistente IA", headerShown: true }}
             />
           </Stack.Navigator>
         </NavigationContainer>

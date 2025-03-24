@@ -73,6 +73,7 @@ const NewPatientScreen: React.FC<NewPatientScreenProps> = ({ navigation }) => {
       };
 
       // Enviar la solicitud al servidor
+      console.log("Datos del paciente:", JSON.stringify(patientData, null, 2));
       await createPatient(patientData);
 
       // Mostrar mensaje de éxito y regresar a la pantalla anterior
